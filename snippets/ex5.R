@@ -1,0 +1,5 @@
+df <- read.csv(P_Filename, row.names = 1)
+I <- as.matrix(df)
+B <- graph_from_biadjacency_matrix(t(I))
+is_bipartite(B)
+plot(B, layout = layout_as_bipartite)
