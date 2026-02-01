@@ -1,4 +1,5 @@
 #read and load network to graph
+print("\n")
 P_Filename<-"./Data/Medan_Rio_Blanco.csv"
 df <- read.csv(P_Filename, row.names = 1)
 I <- as.matrix(df)

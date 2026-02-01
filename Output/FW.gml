@@ -1,4 +1,4 @@
-Creator "igraph version 0.10.13-126-g31c4e6ffc Sun Feb  1 09:15:52 2026"
+Creator "igraph version 0.10.13-126-g31c4e6ffc Sun Feb  1 21:41:53 2026"
 Version 1
 graph
 [

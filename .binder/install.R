@@ -3,5 +3,8 @@ install.packages(c(
   "tidyverse",
   "igraph",
   "tidygraph",
-  "ggraph"
+  "ggraph",
+  "bipartite",
+  "deSolve",
+  "gamlss.dist"
 ))
