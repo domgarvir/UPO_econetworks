@@ -156,6 +156,51 @@ get_MusRank <- function(web, mode = "ranking", niterations = 1000, seed = NULL) 
   }
 }
 
+metric_to_color <- function(metric,
+                              ncol = 100,
+                              option = "viridis",
+                              na_col = "grey90") {
+  stopifnot(is.numeric(metric))
+
+  # min–max scaling (ignore NA)
+  mmin <- min(metric, na.rm = TRUE)
+  mmax <- max(metric, na.rm = TRUE)
+
+  scaled <- (metric - mmin) / (mmax - mmin + 1e-12)
+
+  # viridis palette
+  pal <- viridis::viridis(ncol, option = option)
+
+  # map to colors
+  cols <- pal[floor(scaled * (ncol - 1)) + 1]
+
+  # handle NA / non-finite
+  cols[!is.finite(metric)] <- na_col
+
+  cols
+}
+
+membership_to_colors <- function(membership,
+                                 palette = viridis::viridis,
+                                 na_col = "grey90") {
+  stopifnot(is.numeric(membership) || is.factor(membership))
+
+  # handle NA
+  cols <- rep(na_col, length(membership))
+
+  ok <- !is.na(membership)
+  if (!any(ok)) return(cols)
+
+  # reindex memberships to 1..K (important!)
+  mod_ids <- as.integer(factor(membership[ok]))
+  n_mod   <- length(unique(mod_ids))
+
+  pal <- palette(n_mod)
+
+  cols[ok] <- pal[mod_ids]
+  cols
+}
+
 interaction_matrix <- function(web,gamma_avg,rho,delta){
   SA <- nrow(web)
   SP <- ncol(web)

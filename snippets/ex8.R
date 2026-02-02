@@ -33,4 +33,5 @@ legend("topright",
        legend = c("Empirical (B)", "Random bipartite (G0)"),
        pch = c(16, 1),
        bty = "n")
+
        
