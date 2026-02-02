@@ -78,8 +78,6 @@ get_MusRank <- function(web, mode = "ranking", niterations = 1000, seed = NULL) 
   # web: 2D incidence matrix/data.frame (plants x animals)
   # mode = "ranking" returns scores + sorted names; otherwise returns reordered web
 
-  if (!is.null(seed)) set.seed(seed)
-
   # Force 2D matrix
   web <- as.matrix(web)
   if (is.null(dim(web)) || length(dim(web)) != 2) {
