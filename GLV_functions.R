@@ -4,6 +4,31 @@
 library(tidyverse)
 library(deSolve)
 
+
+# RHS del GLV: dx/dt = x * (r + A %*% x)
+glv_rhs <- function(t, y, parms) {
+  y <- pmax(y, 0)  # evita negativos numéricos
+  r <- parms$r
+  A <- parms$A
+  dy <- y * (r + as.vector(A %*% y))
+  list(dy)
+}
+
+integrate_GLV2 <- function(r, A, x0, times = seq(0, 50, by = 0.01)) {
+  stopifnot(length(r) == nrow(A), nrow(A) == ncol(A), length(x0) == length(r))
+  out <- ode(y = x0, times = times, func = glv_rhs, parms = list(r = r, A = A))
+  out.df <- as.data.frame(out)
+
+  # pasar a formato largo "tidy" para ggplot
+  long <- data.frame(
+    time = rep(out.df$time, times = length(r)),
+    species = rep(paste0("sp", seq_along(r)), each = nrow(out.df)),
+    density = as.vector(as.matrix(out.df[, -1]))
+  )
+  long
+}
+
+
 # Generalized Lotka-Volterra model
 GLV <- function(t, x, parameters){
     with(as.list(c(x, parameters)), {

@@ -201,6 +201,16 @@ membership_to_colors <- function(membership,
   cols
 }
 
+# Samples m vectors randomly on a n-dimensional simplex
+simplex_sampling <- function(m, n) {
+  r <- list()
+  for (j in 1:m) {
+    dist <- c(sort(runif(n-1, 0, 1)), 1)
+    r[[j]] <- c(dist[1], diff(dist))
+  }
+  return(r)
+}
+
 interaction_matrix <- function(web,gamma_avg,rho,delta){
   SA <- nrow(web)
   SP <- ncol(web)
